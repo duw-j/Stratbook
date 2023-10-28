@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    title Strats
+  body  
+    h1 Strats
+    ul
+        each strat in strats
+            li
+                a(href='/strat/' + strat.id)
+                    h2= strat.name

@@ -1,4 +1,4 @@
-const dbconfig = require('../config/dbconfig')
+const dbconfig = require('../../config/dbconfig')
 
 const pool = dbconfig.pool;
 

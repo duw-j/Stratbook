@@ -1,5 +1,5 @@
 require('dotenv').config();
-const dbconfig = require('../config/dbconfig')
+const dbconfig = require('../../config/dbconfig')
 
 // const Pool = require('pg').Pool
 // const pool = new Pool({
@@ -24,14 +24,17 @@ const getStrats = (req, res) => {
 
 const getStratByID = (req, res) => {
     const id = parseInt(req.params.id);
-    console.log("here");
     pool.query("SELECT p.name AS pname, s.name AS sname, role FROM player as p, strat as s, StratPlayer as sp WHERE sid = s.id AND pid = p.id AND sp.sid = $1;", [id], (error, results) => {
         if(error) {
             throw error;
         }
         //response.status(200).json(results.rows);
         console.log(results.rows);
-        res.render('../views/strat/strat.pug', {strat : results.rows})
+        if(results.rows.length == 0) {
+            console.log("no res");
+        } else {
+            res.render('../views/strat/strat.pug', {strat : results.rows})
+        }
     })
 };
 
@@ -48,8 +51,19 @@ const createStrat = (request, response) => {
     })
 }
 
+const deleteStrat = (request, response) => {
+    const id = parseInt(request.params.id);
+    pool.query("DELETE FROM strat WHERE ID = $1", [id], (error, results) => {
+        if(error) {
+            throw error;
+        }
+        response.redirect('/strat')
+    })
+}
+
 module.exports = {
     getStrats,
     getStratByID,
-    createStrat
+    createStrat,
+    deleteStrat
 };

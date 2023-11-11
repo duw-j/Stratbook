@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title New Strat
+    link(rel='stylesheet', href='/styles.css')
+  body  
+    h1 New Strat
+
+    form(action='/strat/create', method='POST')
+      label(for='name') Name:
+      input(type='text', id='name', name='stratName', required)
+
+      button(type='submit') Create

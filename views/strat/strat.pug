@@ -2,8 +2,9 @@ doctype html
 html
   head
     title Strat
+    link(rel='stylesheet', href='/styles.css')
   body  
-    h1 #{strat[0].sname}
+    h1 #{strat.sname}
     ul
         each info in strat
             li= info.pname + ' - ' + info.role

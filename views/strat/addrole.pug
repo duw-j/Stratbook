@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    title New Strat
+    link(rel='stylesheet', href='/styles.css')
+  body 
+  ul
+    form(action='/strat/addstratplayer', method='POST')
+        each player in players
+            li
+                span= player.name
+                input(type='hidden', name='playerId', value=player.id)
+                input(type='text', name='playerRole', placeholder='Role')
+        button(type='submit') Update Players

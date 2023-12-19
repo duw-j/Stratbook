@@ -15,7 +15,7 @@ app.use('/strat', stratRoute);
 app.use('/player', playerRoute)
 
 app.get('/', function (req, res) {
-    res.send('GET request to homepage')
+    res.render('index')
 });
 
 app.listen(port, () => {

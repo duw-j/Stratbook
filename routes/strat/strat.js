@@ -14,13 +14,21 @@ router.get("/", db.getStrats);
 
 // });
 
-router.get("/new", (req, res) => {
-    res.render("../views/strat/new.pug");
-});
+// router.get("/new", (req, res) => {
+    // res.render("../views/strat/new.pug");
+// });
+
+router.get("/new", db.newStrat);
 
 router.post("/create", db.createStrat);
-router.post("/delete/:id", db.deleteStrat);
+
+router.get("/addrole", db.addRole)
+
+router.post("/addstratplayer", db.addStratPlayer)
+
 router.get("/:id", db.getStratByID);
+
+router.post("/delete/:id", db.deleteStrat);
 
 
 

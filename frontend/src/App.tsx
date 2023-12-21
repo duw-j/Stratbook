@@ -1,22 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
 import MapList from "./components/MapList";
-
-interface Strat {
-	id: number;
-	name: string;
-}
+import StratList from "./components/StratList";
+import { Data } from "./types/types";
 
 function App() {
-	const [data, setData] = useState<Strat[] | null>(null);
-	const [currentMapID, setCurrentMapID] = useState(-1);
-	const [currentMap, setCurrentMap] = useState("");
+	const [data, setData] = useState<Data[]>([]);
 
-	useEffect(() => {
-		fetchData(currentMapID);
-	}, [currentMapID]);
-
-	const fetchData = async (mapID: number) => {
+	const fetchStrats = async (mapID: number) => {
 		try {
 			const response = await fetch("http://127.0.0.1:3000/strat/map/" + mapID);
 			const result = await response.json();
@@ -26,27 +17,39 @@ function App() {
 		}
 	};
 
-	const handleSelectMap = (mapID: number, map: string) => {
-		setCurrentMapID(mapID);
-		setCurrentMap(map);
+	const handleSelectMap = (mapID: number) => {
+		fetchStrats(mapID);
+	};
+
+	const handleModify = (strat: string) => {
+		console.log("modify: " + strat);
+	};
+
+	const handleDelete = (strat: string) => {
+		console.log("delete: " + strat);
+	};
+
+	const handleCreate = () => {
+		console.log("create strat");
 	};
 
 	return (
 		<>
-			<div>
-				<MapList onClick={handleSelectMap} />
-			</div>
-			<div> {currentMapID} </div>
-			{data && (
-				<div>
-					<h2>{currentMap}</h2>
-					<ul>
-						{data.map((strat) => (
-							<li key={strat.id}>{strat.name}</li>
-						))}
-					</ul>
+			<div className="custom-container">
+				<div className="row">
+					<div className="col-md-3 col-lg-3 ml-md-0">
+						<MapList onClick={handleSelectMap} />
+					</div>
+					<div className="col-md-9 col-lg-9">
+						<StratList
+							data={data}
+							onModify={handleModify}
+							onDelete={handleDelete}
+							onCreate={handleCreate}
+						/>
+					</div>
 				</div>
-			)}
+			</div>
 		</>
 	);
 }

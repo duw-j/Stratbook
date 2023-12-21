@@ -22,7 +22,13 @@ const getStrats = (req, res) => {
 const getStratsByMap = (req, res) => {
 	const map = parseInt(req.params.id);
 	const query = {
-		text: `SELECT strat.id as "id", strat.name as "name", map.name as "map" from strat, map WHERE strat.map = map.id AND map.id = $1;`,
+		// text: `SELECT strat.id as "id", strat.name as "name", map.name as "map" from strat, map WHERE strat.map = map.id AND map.id = $1;`,
+		text: `SELECT player.id as pid, player.name AS pname, strat.id as sid, strat.name as sname, role, map.name as map
+		FROM player, strat, map, stratplayer 
+		WHERE sid = strat.id
+		AND pid = player.id
+		AND strat.map = map.id
+		AND map.id = $1`,
 		values: [map],
 	};
 
